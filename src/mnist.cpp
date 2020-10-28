@@ -192,3 +192,8 @@ int MNIST::next()
 
     return step_;
 }
+
+void MNIST::reset_step() {
+    step_ = 0;
+}
+

@@ -25,6 +25,7 @@ public:
 
     virtual float get_loss(Blob<float> *target);
     virtual int   get_accuracy(Blob<float> *target);
+    virtual float* get_output();
 
     void set_cuda_context(CudaContext *context) { cuda_ = context; }
 
@@ -87,6 +88,7 @@ class Dense: public Layer
 
     Blob<float> *forward(Blob<float> *input);
     Blob<float> *backward(Blob<float> *grad_input);
+    float* get_output();
 
     private: 
     int input_size_ = 0;

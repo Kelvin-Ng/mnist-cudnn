@@ -122,6 +122,12 @@ int Layer::get_accuracy(Blob<float> *target)
 	return EXIT_FAILURE;
 }
 
+float* Layer::get_output()
+{
+	assert("Not implemented." && false);
+	return nullptr;
+}
+
 int Layer::load_parameter()
 {
 	std::stringstream filename_weights, filename_biases;
@@ -190,6 +196,10 @@ __global__ void init_one_vec(float* d_one_vec, size_t length)
 	if (i >= length) return;
 
 	d_one_vec[i] = 1.f;
+}
+
+float* Dense::get_output() {
+    return output_->to(host);
 }
 
 Blob<float> *Dense::forward(Blob<float> *input)

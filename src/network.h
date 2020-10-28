@@ -34,6 +34,7 @@ class Network
 
     float loss(Blob<float> *target);
     int get_accuracy(Blob<float> *target);
+    float* get_output();
 
     void cuda();
     void train();

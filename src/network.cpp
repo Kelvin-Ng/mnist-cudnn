@@ -202,6 +202,12 @@ int Network::get_accuracy(Blob<float> *target)
 	return layer->get_accuracy(target);
 }
 
+float* Network::get_output()
+{
+	Layer *layer = layers_.back();
+	return layer->get_output();
+}
+
 
 #if 0
 Blob<float> *predict = this->output_;

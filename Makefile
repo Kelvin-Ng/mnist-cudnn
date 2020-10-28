@@ -34,9 +34,24 @@ ${OBJ_DIR}/train.o: train.cpp ${INCS}
 	@mkdir -p $(@D)
 	$(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -c $< -o $@
 
-OBJS = ${OBJ_DIR}/train.o ${OBJ_DIR}/mnist.o ${OBJ_DIR}/loss.o ${OBJ_DIR}/layer.o ${OBJ_DIR}/network.o 
+${OBJ_DIR}/infer.o: infer.cpp ${INCS}
+	@mkdir -p $(@D)
+	$(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -c $< -o $@
 
-train: $(OBJS)
+${OBJ_DIR}/infer_throughput_latency.o: infer_throughput_latency.cpp ${INCS}
+	@mkdir -p $(@D)
+	$(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -c $< -o $@
+
+TRAIN_OBJS = ${OBJ_DIR}/train.o ${OBJ_DIR}/mnist.o ${OBJ_DIR}/loss.o ${OBJ_DIR}/layer.o ${OBJ_DIR}/network.o 
+INFER_OBJS = ${OBJ_DIR}/mnist.o ${OBJ_DIR}/loss.o ${OBJ_DIR}/layer.o ${OBJ_DIR}/network.o 
+
+train: $(TRAIN_OBJS)
+	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+
+
+infer: infer.o $(INFER_OBJS)
+	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+
+
+infer_throughput_latency: infer_throughput_latency.o $(INFER_OBJS)
 	$(EXEC) $(NVCC) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ $+
 
 convolution: convolution.cu

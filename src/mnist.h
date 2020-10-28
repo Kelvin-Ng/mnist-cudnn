@@ -35,6 +35,7 @@ class MNIST
     // increase current step index
     // optionally it updates shared buffer if input parameter is true.
     int  next();
+    void reset_step();
 
     // returns a pointer which has input batch data
     Blob<float>* get_data()   { return data_;  }
